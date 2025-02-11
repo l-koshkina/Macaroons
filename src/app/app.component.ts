@@ -1,17 +1,30 @@
-import {Component} from '@angular/core';
-import {CommonModule, NgFor, NgIf} from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {CommonModule, NgFor, NgIf, registerLocaleData} from '@angular/common';
 import {ProductType} from './types/product.type';
 import {FormsModule} from '@angular/forms';
 import {FooterComponent} from './components/footer/footer.component';
+import {ProductsService} from './services/products.service';
+import {CartService} from './services/cart.service';
+import {ProductComponent} from './components/product/product.component';
+import {AdvantagesComponent} from './components/advantages/advantages.component';
+import {ColorHoverButtonDirective} from './directives/color-hover-button.directive';
+import {PhoneNumberPipe} from './pipes/phone-number.pipe';
+import localeRu from '@angular/common/locales/ru';
+
+registerLocaleData(localeRu);
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [NgFor, NgIf, FormsModule, CommonModule, FooterComponent],
+  imports: [NgFor, NgIf, FormsModule, CommonModule, FooterComponent, ProductComponent, AdvantagesComponent, ColorHoverButtonDirective, PhoneNumberPipe],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
+  providers: [ProductsService]
+
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  constructor(private productsService: ProductsService, public cartService: CartService) {
+  }
   public advantages = [
     {
       title: 'Лучшие продукты',
@@ -31,37 +44,16 @@ export class AppComponent {
     }
   ]
 
-  public products = [
-    {
-      image: 'macaroon-1.png',
-      title: 'Макарун с малиной',
-      quantity: '1 шт.',
-      price:'1,70 руб.'
-    },
-    {
-      image: 'macaroon-2.png',
-      title: 'Макарун с манго',
-      quantity: '1 шт.',
-      price:'1,70 руб.'
-    },
-    {
-      image: 'macaroon-3.png',
-      title: 'Пирог с ванилью',
-      quantity: '1 шт.',
-      price:'1,70 руб.'
-    },
-    {
-      image: 'macaroon-4.png',
-      title: 'Пирог с фисташками',
-      quantity: '1 шт.',
-      price:'1,70 руб.'
-    }
-  ]
+  public products: ProductType[] = [];
 
   public formValues = {
     productTitle: '',
     name: '',
     phone: ''
+  }
+
+  ngOnInit() {
+    this.products = this.productsService.getProducts();
   }
 
   public scrollTo(target: HTMLElement): void {
@@ -71,6 +63,9 @@ export class AppComponent {
   public addToCart(product: ProductType, target: HTMLElement): void {
     this.scrollTo(target);
     this.formValues.productTitle = product.title.toUpperCase();
+    this.cartService.count++;
+    this.cartService.amount = this.cartService.amount + product.price;
+    alert(product.title + ' добавлен в корзину!')
   }
 
   public createOrder() {
@@ -95,5 +90,7 @@ export class AppComponent {
   }
 
   public showPresent: boolean = true;
-  public phoneNumber: string = '+375 (29) 368-98-68';
+  public phoneNumber: string = '375293689868';
+  public linkToInstagram: string = 'https://www.instagram.com/'
+
 }

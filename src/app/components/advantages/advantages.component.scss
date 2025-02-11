@@ -1,0 +1,65 @@
+
+.advantage-number {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: #821328;
+  position: relative;
+  margin-bottom: 15px;
+  transition: background-color .3s ease-in;
+}
+
+.number {
+  position: absolute;
+  bottom: -3px;
+  left: 20px;
+  font-size: 60px;
+  font-family: Gilroy-ExtraBold, sans-serif;
+  color: rgb(255, 255, 255);
+  line-height: 0.75;
+  transition: color .3s ease-in;
+}
+
+.advantage:hover .advantage-number {
+  background-color: #eba8b1;
+}
+
+.advantage:hover .number {
+  color: #821328;
+}
+
+.advantage-title {
+  font-size: 20px;
+  font-family: Gilroy-ExtraBold, sans-serif;
+  color: rgb(51, 25, 7);
+  margin-bottom: 20px;
+}
+
+.advantage-text {
+  font-size: 15px;
+  font-family: Gilroy-Medium, sans-serif;
+  color: rgb(51, 25, 7);
+  line-height: 1.333;
+}
+
+@media screen and (max-width: 1023px) {
+  .advantage {
+    max-width: 220px;
+  }
+
+  .advantage-number {
+    margin: 0 auto 13px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .advantage-title {
+    font-size: 18px;
+  }
+
+  .advantage-text {
+    font-size: 13px;
+  }
+}
+
+

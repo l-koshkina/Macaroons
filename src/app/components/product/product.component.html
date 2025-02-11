@@ -1,0 +1,17 @@
+<div class="product" >
+  <div class="product-image">
+    <img src="/images/{{product.image}}">
+  </div>
+  <div class="product-info">
+    <h3 class="product-title">{{product.title}}</h3>
+    <div class="product-extra">
+      <div class="product-extra-info">
+        <div class="product-quantity">{{product.quantity}}</div>
+        <div class="product-price">{{product.price | currency: 'RUB' : 'руб.' : '1.2-2' : 'ru-RU'}}</div>
+      </div>
+      <div class="product-extra-action">
+        <button class="btn product-btn" colorHoverButton (click)="addProductToCart()">Заказать</button>
+      </div>
+    </div>
+  </div>
+</div>
